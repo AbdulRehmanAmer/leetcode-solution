@@ -84,9 +84,3 @@ class Solution:
             
         # return ans
     
-
-    
-sol = Solution()
-print (sol.numSubmat([[1,0,1],[1,1,0],[1,1,0]]))
-print (sol.numSubmat([[0,1,1,0],[0,1,1,1],[1,1,1,0]]))
-print (sol.numSubmat([[1,1,1,1,1,1]]))
