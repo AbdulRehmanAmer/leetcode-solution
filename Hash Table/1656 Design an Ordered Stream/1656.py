@@ -6,7 +6,7 @@ class OrderedStream:
         self.ptr = 0
         
 
-    def insert(self, idKey: int, value: str) -> List[str]:
+    def insert(self, idKey: int, value: str):
         self.hash_table[idKey - 1] = value
         
         chunk = list()

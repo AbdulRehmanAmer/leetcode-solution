@@ -1,6 +1,6 @@
 # My LeetCode Submission: https://leetcode.com/problems/unique-morse-code-words/solutions/3753735/python-easiest-solution-hash-table-solution-linear-time-solution/
 class Solution:
-    def uniqueMorseRepresentations(self, words: List[str]) -> int:
+    def uniqueMorseRepresentations(self, words) -> int:
         morse_code = [".-","-...","-.-.","-..",".","..-.","--.","....","..",".---","-.-",".-..","--","-.","---",".--.","--.-",".-.","...","-","..-","...-",".--","-..-","-.--","--.."]
 
         transformation = set()

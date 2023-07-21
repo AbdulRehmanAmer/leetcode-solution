@@ -1,5 +1,5 @@
 # My Leetcode Submission: https://leetcode.com/problems/substrings-of-size-three-with-distinct-characters/solutions/3791602/easiest-concise-simple-solution/
-
+import collections
 class Solution:
     def countGoodSubstrings(self, s: str) -> int:
         string = collections.deque([x for x in s[ : 3]])

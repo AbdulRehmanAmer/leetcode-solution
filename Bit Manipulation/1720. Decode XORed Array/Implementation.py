@@ -3,7 +3,7 @@
 from operator import xor
 
 class Solution:
-    def decode(self, encoded: List[int], first: int) -> List[int]:
+    def decode(self, encoded, first: int):
         arr = [first]
         for x in encoded:
             arr.append(xor(arr[-1], x))

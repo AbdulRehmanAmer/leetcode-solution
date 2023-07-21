@@ -1,7 +1,7 @@
 # My LeetCode Submission: https://leetcode.com/problems/how-many-numbers-are-smaller-than-the-current-number/solutions/3753506/linear-time-solution-solution-python-solution/
 from operator import itemgetter
 class Solution:
-    def smallerNumbersThanCurrent(self, nums: List[int]) -> List[int]:
+    def smallerNumbersThanCurrent(self, nums):
         # Through Monotonic Stack But no popping any element
         monotonic_stack = list()
         ans = [None] * len(nums)
