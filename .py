@@ -1,54 +1,28 @@
 class Solution:
-    def candy(self, ratings) -> int:
-        if len(ratings) == 1: return 1
-        if len(ratings) == 2: 
-            ratings.sort()
-            if ratings[0] == ratings[1]: return 2
-            if ratings[0] < ratings[1]: return 3
-        i = 1
-        neighbour = 1
-        candies = 0
-        while i < len(ratings) - 1:
-            # Estimated Neighbours_________________
-            if ratings[i] > ratings[i - 1]:
-                neighbour += 1
-            elif ratings[i] == ratings[i - 1]:
-                neighbour = 1
-            # _____________________________________
-            if ratings[i + 1] < ratings[i]:
-                count = 1
-                while i < len (ratings) - 1 and ratings[i + 1] < ratings[i]:
-                    i += 1
-                    candies += count
-                    count += 1
-                candies += max(count, neighbour)
-                i += 1
-                neighbour = 1
-                continue
-            candies += neighbour
-            i += 1
-        if ratings[-1] > ratings[-2]: 
-            candies += neighbour + 1
-        if ratings[-1] == ratings[-2]:
-            candies += 1
+    def trap(self, height) -> int:
+        i = 0
+        while i < len(height) and height[i] == 0: i += 1
+        if i == len(height): return 0
 
-        if ratings[0] < ratings[1]:
-            candies += 1
-        else:
-            i = 0
-            while i < len(ratings) - 1 and ratings[i + 1] < ratings[i]:
-                i += 1
-            candies += i + 1
+        monotonic_stack = [height[i]]
+        trapped_water = 0
+        for i in range(i + 1, len(height)):
+            if height[i] < monotonic_stack[-1]: monotonic_stack.append(height[i])
+            else:
+                n = min(monotonic_stack[0], height[i])
+                for j in range(1, len(monotonic_stack)):
+                    
+                    trapped_water += max(n - monotonic_stack[j], 0)
+                    monotonic_stack[j] = max(monotonic_stack[j], n)
+                    if monotonic_stack[j] > n: break
 
 
-        return candies
-            
-            
-            
+                if n == monotonic_stack[0]: monotonic_stack = []
+                monotonic_stack.append(height[i])
+        return trapped_water
+                
+                    
 
 sol = Solution()
-# print (sol.candy([2,3,3,2,5,4,3,2,1]))
-# print (sol.candy([5,4,3,2,1]))
-# print (sol.candy([1,2,2]))
-# print (sol.candy([1,0,2]))
-print (sol.candy([2,1]))
+n = sol.trap([0,1,0,2,1,0,1,3,2,1,2,1])
+print (n)
