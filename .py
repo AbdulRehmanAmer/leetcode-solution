@@ -1,57 +1,85 @@
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, val=0, next=None):
-        self.val = val
-        self.next = next
 
-class Solution:
-    def reverseBetween(self, head, left: int, right: int) :
-        if left == right: return head
-        sentinel_node = ListNode(0, head)
-        pointer = head
-        prev = head
-        for _ in range(left - 1):
-            prev = pointer
-            pointer = pointer.next
+class LRUCache:
 
-        start, end, right_node = self.reverse_chain(pointer, left, right)
+    def __init__(self, capacity: int):
+        self.capacity = capacity
+        self.val = list()
+        self.key = list()
+        self.indices = dict()
+        self.start = 0
 
-        start.next = right_node
-        
-        if left == 1: 
-            sentinel_node.next = end
-        else:
-            prev.next = end
-
-        return sentinel_node.next
-        
-    def reverse_chain(self, head, left, right):
-        start = head
-        current_node = head
-        right_node = current_node.next
-        for i in range(left, right):
-            temp = right_node.next
-            right_node.next = current_node
-            current_node = right_node
-            right_node = temp
-
-            if i == right - 1:
-                return start, current_node, right_node
+    def get(self, key: int) -> int:
+        if key not in self.indices: return -1
         
 
+        i = self.indices[key]
+        if self.val[i] == None: return -1
+        get_value = self.val[i]
 
 
+        self.indices[key] = len(self.val)
+        self.val.append(self.val[i])
+        self.key.append(key)
+
+        self.start += 1
+
+        return get_value
+
+
+        
+
+    def put(self, key: int, value: int) -> None:
+        if key in self.indices:
+            if self.indices[key] == 0:
+                self.start += 1
+            self.indices[key] = len(self.val)
+            self.val.append(value)
+            self.key.append(key)
+
+            return None
+
+       
+
+        if not self.capacity:
             
+            del self.indices[self.key[self.start]]
+            self.start += 1
+            self.indices[key] = len(self.val)
+
+            self.val.append(value)
+            self.key.append(key)
+
+            return None
+        
+        self.indices[key] = len(self.val)
+
+        self.val.append(value)
+        self.key.append(key)
+        self.capacity -= 1
+        
+# obj = LRUCache(2)
+# obj.put(1, 1)
+# obj.put(2, 2)
+# print (obj.get(1))
+# obj.put(3, 3)
+# print (obj.get(2))
+# obj.put(4, 4)
+# print (obj.get(1))
+# print (obj.get(3))
+# print (obj.get(4))
 
 
+# obj = LRUCache(1)
+# obj.put(2, 1)
+# print (obj.get(2))
+# obj.put(3, 2)
+# print (obj.get(2))
+# print (obj.get(3))
 
-
-
-n = ListNode(3)
-head = n
-n.next = ListNode(5)
-n = n.next
-
-
-sol = Solution()
-sol.reverseBetween(head, 1, 2)
+obj = LRUCache(2)
+obj.put(2, 1)
+obj.put(1, 1)
+obj.put(2, 3)
+obj.put(4, 1)
+print (obj.get(1))
+print (obj.get(2))
